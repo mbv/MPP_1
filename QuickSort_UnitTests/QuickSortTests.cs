@@ -43,32 +43,54 @@ namespace QuickSort_UnitTests
         [TestMethod]
         public void WhenArrayIsReversedSorted()
         {
-            int[] inputArray = { 4, 3, 2, 1, 0 };
-            int[] resultArray = { 0, 1, 2, 3, 4 };
+            int[] inputArray = {4, 3, 2, 1, 0};
+            int[] resultArray = {0, 1, 2, 3, 4};
             PerformEqualityTest(inputArray, resultArray);
         }
 
         [TestMethod]
         public void WhenArrayContainsOnlyEqualsValues()
         {
-            int[] inputArray = { 1, 1, 1, 1, 1 };
-            int[] resultArray = { 1, 1, 1, 1, 1 };
+            int[] inputArray = {1, 1, 1, 1, 1};
+            int[] resultArray = {1, 1, 1, 1, 1};
             PerformEqualityTest(inputArray, resultArray);
         }
 
         [TestMethod]
         public void WhenArrayContainsOneElement()
         {
-            int[] inputArray = { 42 };
-            int[] resultArray = { 42 };
+            int[] inputArray = {42};
+            int[] resultArray = {42};
             PerformEqualityTest(inputArray, resultArray);
         }
 
-        private static void PerformEqualityTest<T>(T[] inputArray, T[] resultArray)
+        [TestMethod]
+        public void DefaultArray()
         {
-            ISort<T> sort = new QuickSort.QuickSort<T>();
-            IComparer<T> comparer = Comparer<T>.Default;
+            int[] inputArray = {77, 55, 32, 1, 100, 99, 443};
+            int[] resultArray = {1, 32, 55, 77, 99, 100, 443};
+            PerformEqualityTest(inputArray, resultArray);
+        }
+
+
+        [TestMethod]
+        public void DefaultArrayReversedSort()
+        {
+            int[] inputArray = {77, 55, 32, 1, 100, 99, 443};
+            int[] resultArray = {443, 100, 99, 77, 55, 32, 1};
+            PerformEqualityTest(inputArray, resultArray, ReverseComparer<int>.Default);
+        }
+
+        private static void PerformEqualityTest<T>(T[] inputArray, T[] resultArray, IComparer<T> comparer = null)
+            where T : IComparable<T>
+        {
+            ISort<T> sort = new QuickSort<T>();
+            if (comparer == null)
+            {
+                comparer = Comparer<T>.Default;
+            }
             sort.Sort(inputArray, comparer);
+
             CollectionAssert.AreEqual(inputArray, resultArray);
         }
     }
