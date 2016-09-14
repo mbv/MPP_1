@@ -11,9 +11,18 @@ namespace QuickSort
         public int StartValue { get; set; } = -10000;
         public int EndValue { get; set; } = 10000;
 
+        private void FillArray(int[] values, int count)
+        {
+            Random random = new Random();
+            for (int i = 0; i < count; i++)
+                values[i] = random.Next(StartValue, EndValue);
+        }
+
         public int[] Generate(int count)
         {
-            throw new NotImplementedException();
+            var randomArray = new int[count];
+            FillArray(randomArray, count);
+            return randomArray;
         }
     }
 }
