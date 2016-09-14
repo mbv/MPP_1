@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QuickSort;
+using BenchmarkDotNet.Running;
 
 namespace QuickSort_UnitTests
 {
@@ -92,6 +93,12 @@ namespace QuickSort_UnitTests
             sort.Sort(inputArray, comparer);
 
             CollectionAssert.AreEqual(inputArray, resultArray);
+        }
+
+        [TestMethod]
+        public void BenchMark()
+        {
+            BenchmarkRunner.Run<QuickSortBenchmark>();
         }
     }
 }
