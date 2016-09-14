@@ -21,7 +21,9 @@ namespace QuickSort
             {
                 if (comparer.Compare(array[j], array[right]) <= 0)
                 {
-                    Swap(array, i, j);
+                    var temp = array[j];
+                    array[j] = array[i];
+                    array[i] = temp;
                     i++;
                 }
             }
@@ -31,16 +33,21 @@ namespace QuickSort
         void SortArray(T[] array, IComparer<T> comparer, int left, int right)
         {
             if (left >= right) return;
-            int c = partition(array, comparer, left, right);
+            int i = left;
+            for (int j = left; j <= right; j++)
+            {
+                if (comparer.Compare(array[j], array[right]) <= 0)
+                {
+                    var temp = array[j];
+                    array[j] = array[i];
+                    array[i] = temp;
+                    i++;
+                }
+            }
+
+            int c = i - 1;
             SortArray(array, comparer, left, c - 1);
             SortArray(array, comparer, c + 1, right);
-        }
-
-        private static void Swap<T>(T[] array, int left, int right)
-        {
-            var temp = array[right];
-            array[right] = array[left];
-            array[left] = temp;
         }
     }
 }
